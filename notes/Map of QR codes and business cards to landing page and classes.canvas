@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"8ef768abf614b2a6","type":"file","file":"Uncategorized/info slip.md","x":-720,"y":320,"width":366,"height":486},
+		{"id":"8932a94f4fc3d4b8","type":"file","file":"Uncategorized/business card.md","x":-932,"y":-233,"width":424,"height":254},
+		{"id":"e7938078cb9efdc9","type":"file","file":"Uncategorized/landing page.md","x":-280,"y":-480,"width":360,"height":680},
+		{"id":"46a3fc33336d17cf","type":"text","text":"so i should have 3 QR codes for cashapp, venmo, and zelle\n\nand all 3 should go to their own pages which will be identical except for the service they connec tto\n\n","x":640,"y":-1036,"width":420,"height":316},
+		{"id":"bf95dc6171cdea61","type":"text","text":"page 1","x":480,"y":626,"width":360,"height":614},
+		{"id":"ad21dbdda8ad1b7e","type":"file","file":"Uncategorized/info flyer on bucket.md","x":420,"y":-240,"width":620,"height":473},
+		{"id":"2cab3323478eff1f","type":"text","text":"cashapp","x":480,"y":14,"width":138,"height":158},
+		{"id":"721dcc2d1daff689","type":"text","text":"venmo","x":661,"y":14,"width":138,"height":158},
+		{"id":"164229dd15d00ee9","type":"text","text":"zelle","x":840,"y":14,"width":138,"height":158},
+		{"id":"bde27a0e4bf04951","type":"text","text":"page 2","x":920,"y":620,"width":339,"height":620},
+		{"id":"115d4a3c073cace9","type":"text","text":"page 3","x":1340,"y":620,"width":342,"height":620}
+	],
+	"edges":[
+		{"id":"1eaee8021bc4a7bf","fromNode":"2cab3323478eff1f","fromSide":"bottom","toNode":"bf95dc6171cdea61","toSide":"top"},
+		{"id":"2c9beb26582e0a76","fromNode":"721dcc2d1daff689","fromSide":"bottom","toNode":"bde27a0e4bf04951","toSide":"top"},
+		{"id":"1d472638bfecb622","fromNode":"164229dd15d00ee9","fromSide":"bottom","toNode":"115d4a3c073cace9","toSide":"top"},
+		{"id":"ff93ba6c8d1a5567","fromNode":"8932a94f4fc3d4b8","fromSide":"right","toNode":"e7938078cb9efdc9","toSide":"left"}
+	]
+}
