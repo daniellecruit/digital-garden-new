@@ -1,44 +1,57 @@
-import { exec } from "child_process";
+import { spawn } from "child_process";
 import chokidar from "chokidar";
 
-// Path to watch — change this to your Quartz folder if different
+// Absolute path to git executable
+const gitPath = "/usr/bin/git";
+
+// Path to watch — update this if needed
 const folderToWatch = "./";
 
-// Debounce delay so commits don't fire too often on many changes
-const debounceDelay = 5000; // 5 seconds
+// Debounce delay in ms
+const debounceDelay = 5000;
 
 let timeoutId = null;
+
+const runCommand = (command, args, onExit) => {
+  const child = spawn(command, args, { stdio: "inherit" });
+
+  child.on("error", (err) => console.error(`${command} error:`, err));
+
+  child.on("close", (code) => {
+    if (code !== 0) {
+      console.error(`${command} exited with code ${code}`);
+    }
+    if (onExit) onExit(code);
+  });
+};
 
 const runGitCommands = () => {
   console.log("Changes detected, committing and pushing...");
 
-  exec("git add .", (err, stdout, stderr) => {
-    if (err) {
-      console.error("git add error:", err);
-      return;
-    }
-    exec(`git commit -m "Auto-sync update at ${new Date().toISOString()}"`, (err, stdout, stderr) => {
-      if (err) {
-        if (stderr.includes("nothing to commit")) {
-          console.log("No changes to commit.");
+  runCommand(gitPath, ["add", "."], (code) => {
+    if (code !== 0) return;
+
+    runCommand(
+      gitPath,
+      ["commit", "-m", `Auto-sync update at ${new Date().toISOString()}`],
+      (code) => {
+        if (code !== 0) {
+          if (code === 1) {
+            // git commit returns 1 if nothing to commit, so treat that as no error
+            console.log("No changes to commit.");
+            return;
+          }
           return;
         }
-        console.error("git commit error:", err);
-        return;
+
+        runCommand(gitPath, ["push"]);
       }
-      exec("git push", (err, stdout, stderr) => {
-        if (err) {
-          console.error("git push error:", err);
-          return;
-        }
-        console.log("Pushed changes successfully!");
-      });
-    });
+    );
   });
 };
 
 const watcher = chokidar.watch(folderToWatch, {
-  ignored: /(^|[\/\\])\.git/, // ignore .git folder
+  ignored: /(^|[\/\\])\.git/,
   persistent: true,
 });
 
